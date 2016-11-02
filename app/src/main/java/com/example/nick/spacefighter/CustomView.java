@@ -56,13 +56,13 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
         text=new Paint();
         text.setTextAlign(Paint.Align.LEFT);
         text.setColor(Color.WHITE);
-        text.setTextSize(24);
+        text.setTextSize(48);
         ex= 0;
         ey= 0;
         px= 0;
         py= 0;
-        sx= 5000;
-        sy= -10;
+        sx= 50;
+        sy= 800;
         score = 0;
 
     }
@@ -119,12 +119,12 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawBitmap(bwEnemy,ex,ey,null);
         canvas.drawBitmap(bwPlayer,px,canvas.getHeight() - 200,null);
         canvas.drawBitmap(bwShot,sx,sy,null);
-        canvas.drawText("Score: " + score,canvas.getWidth() / 2 - 25,75,text);
+        canvas.drawText("Score: " + score,canvas.getWidth() / 2 - 125,75,text);
         ey+=10;
         sy-=50;
 
 
-        double distance = Math.sqrt((sx + 100 - ex + 100) * (sx - 100 - ex - 100) + (sy - 100 - ey - 100) * (sy + 100 - ey + 100));
+        double distance = Math.sqrt((sx + 20 - ex + 100) * (sx + 20 - ex + 100) + (sy + 50 - ey + 100) * (sy + 50 - ey + 100));
         if (distance < 50) {
             ex = (int) (Math.random() * canvas.getWidth());
             ey = -10;
