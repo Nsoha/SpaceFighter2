@@ -57,12 +57,12 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
         text.setTextAlign(Paint.Align.LEFT);
         text.setColor(Color.WHITE);
         text.setTextSize(24);
-        ex=0;
-        ey=0;
+        ex= 0;
+        ey= 0;
         px= 0;
         py= 0;
-        sx=5000;
-        sy=0;
+        sx= 5000;
+        sy= -10;
         score = 0;
 
     }
@@ -127,7 +127,7 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
         double distance = Math.sqrt((sx + 100 - ex + 100) * (sx - 100 - ex - 100) + (sy - 100 - ey - 100) * (sy + 100 - ey + 100));
         if (distance < 50) {
             ex = (int) (Math.random() * canvas.getWidth());
-            ey = 0;
+            ey = -10;
             sx = 5000;
             score++;
         }
@@ -141,9 +141,9 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         Log.v("touch event", event.getX() + "," + event.getY());
 
-        double distance = Math.sqrt((px - event.getX()) * (px - event.getX()) + (py - event.getY()) * (py - event.getY()));
+        double distance = Math.sqrt((px + 100 - event.getX()) * (px + 100 - event.getX()) + (py + 100 - event.getY()) * (py + 100 - event.getY()));
         if (distance < 100) {
-            sy =  py + 100;
+            sy =  py - 100;
             sx =  px + 100;
         }
         else if (event.getX() < px + 100 - 49){
