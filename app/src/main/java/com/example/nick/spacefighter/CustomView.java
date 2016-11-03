@@ -33,6 +33,7 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
     Paint text;
     int ex,ey,px,py,sx,sy;
     int score;
+    boolean shot1 = false;
 
     public CustomView(Context ctx, AttributeSet attrs) {
         super(ctx,attrs);
@@ -61,9 +62,10 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
         ey= 0;
         px= 0;
         py= 0;
-        sx= 50;
-        sy= 800;
+        sx= 0;
+        sy= 0;
         score = 0;
+
 
     }
 
@@ -115,21 +117,31 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void customDraw(Canvas canvas) {
+        py = canvas.getHeight() - 200;
         canvas.drawColor(Color.BLACK);
         canvas.drawBitmap(bwEnemy,ex,ey,null);
-        canvas.drawBitmap(bwPlayer,px,canvas.getHeight() - 200,null);
-        canvas.drawBitmap(bwShot,sx,sy,null);
+        canvas.drawBitmap(bwPlayer,px,py,null);
         canvas.drawText("Score: " + score,canvas.getWidth() / 2 - 125,75,text);
         ey+=10;
-        sy-=50;
-
-
-        double distance = Math.sqrt((sx + 20 - ex + 100) * (sx + 20 - ex + 100) + (sy + 50 - ey + 100) * (sy + 50 - ey + 100));
-        if (distance < 50) {
-            ex = (int) (Math.random() * canvas.getWidth());
+        if(ey>canvas.getHeight()){
             ey = -10;
-            sx = 5000;
-            score++;
+            ex = (int) (Math.random() * canvas.getWidth());
+        }
+
+        while(shot1 = true) {
+            canvas.drawBitmap(bwShot, sx, sy, null);
+            sy-=30;
+            if(sy<canvas.getHeight()){
+                shot1 = false;
+            }
+
+            double distance = Math.sqrt((sx - ex) * (sx - ex) + (sy - ey) * (sy - ey));
+            if (distance < 50) {
+                ex = (int) (Math.random() * canvas.getWidth());
+                ey = -10;
+                shot1 = false;
+                score++;
+            }
         }
 
 
@@ -141,18 +153,21 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         Log.v("touch event", event.getX() + "," + event.getY());
 
-        double distance = Math.sqrt((px + 100 - event.getX()) * (px + 100 - event.getX()) + (py + 100 - event.getY()) * (py + 100 - event.getY()));
-        if (distance < 100) {
-            sy =  py - 100;
-            sx =  px + 100;
+        double distance = Math.sqrt((px - event.getX()) * (px - event.getX()) + (py - event.getY()) * (py - event.getY()));
+        if (distance < 50) {
+            if(shot1 = false) {
+                sy = py - 100;
+                sx = px + 80;
+                shot1 = true;
+            }
+
         }
         else if (event.getX() < px + 100 - 49){
             px -= 20;
         }
-        else if (event.getX() > px + 100 + 49){
+        else if (event.getX() > px + 100 + 49) {
             px += 20;
         }
-
         return true;
     }
 
