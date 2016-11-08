@@ -40,15 +40,15 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
 
         enemy = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy);
         bwEnemy=enemy.copy(Bitmap.Config.ARGB_8888, true);
-        bwEnemy = resizeBitmap(bwEnemy,200,200);
+        bwEnemy = resizeBitmap(bwEnemy,100,100);
 
         player = BitmapFactory.decodeResource(context.getResources(),R.drawable.player);
         bwPlayer=player.copy(Bitmap.Config.ARGB_8888, true);
-        bwPlayer = resizeBitmap(bwPlayer,200,200);
+        bwPlayer = resizeBitmap(bwPlayer,100,100);
 
         shot = BitmapFactory.decodeResource(context.getResources(),R.drawable.shot);
         bwShot=shot.copy(Bitmap.Config.ARGB_8888, true);
-        bwShot = resizeBitmap(bwShot,50,100);
+        bwShot = resizeBitmap(bwShot,25,50);
 
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
@@ -122,12 +122,13 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawBitmap(bwPlayer,px,py,null);
         canvas.drawText("Score: " + score,canvas.getWidth() / 2 - 125,75,text);
         ey+=10;
+
         if(ey > canvas.getHeight()){
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
         }
 
-        if(shot1 != false) {
+        if(shot1) {
             canvas.drawBitmap(bwShot, sx, sy, null);
             sy-=30;
             if(sy < 0){
@@ -135,9 +136,9 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             double distance = Math.sqrt((sx - ex) * (sx - ex) + (sy - ey) * (sy - ey));
-            if (distance < 50) {
+            if (distance < 100) {
                 ex = (int) (Math.random() * canvas.getWidth());
-                ey = - 200;
+                ey = - 100;
                 shot1 = false;
                 score++;
             }
@@ -150,14 +151,14 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
 
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event ) {
         Log.v("touch event", event.getX() + "," + event.getY());
 
         double distance = Math.sqrt((px - event.getX()) * (px - event.getX()) + (py - event.getY()) * (py - event.getY()));
         if (distance < 50) {
-           if(shot1 = false) {
-                sy = py - 100;
-                sx = px + 80;
+           if(!shot1) {
+                sy = py - 50;
+                sx = px + 40;
                 shot1 = true;
             }
 
