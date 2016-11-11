@@ -121,7 +121,7 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawBitmap(bwEnemy,ex,ey,null);
         canvas.drawBitmap(bwPlayer,px,py,null);
         canvas.drawText("Score: " + score,canvas.getWidth() / 2 - 125,75,text);
-        ey+=10;
+        ey+=5;
 
         if(ey > canvas.getHeight()){
             ey =-200;
