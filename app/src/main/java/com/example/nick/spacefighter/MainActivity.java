@@ -218,6 +218,13 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
         }
+        double collision = Math.sqrt((MainActivity.x - ex + 50) * (MainActivity.x - ex + 50) + (MainActivity.y - ey + 50) * (MainActivity.y - ey + 50));
+        if(collision<100){
+            ey =-200;
+            ex =(int) (Math.random() * canvas.getWidth());
+            canvas.drawColor(Color.RED);
+            score -= 5;
+        }
 
         if(shot1) {
             canvas.drawBitmap(bwShot, sx, sy, null);
