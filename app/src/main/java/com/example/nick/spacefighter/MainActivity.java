@@ -268,7 +268,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
 
         if(shot1) {
             canvas.drawBitmap(bwShot, sx, sy, null);
-            sy-=30;
+
             if(sy < 0){
                 shot1 = false;
             }
@@ -291,7 +291,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         }
         if(shot2) {
             canvas.drawBitmap(bwShot, sx2, sy2, null);
-            sy2-=30;
+
             if(sy2 < 0){
                 shot2 = false;
             }
@@ -319,7 +319,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         }
         }
 
-
+        sy2-=30;
+        sy-=30;
     }
 
 
@@ -330,7 +331,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     public boolean onTouchEvent(MotionEvent event ) {
 
         Log.v("touch event", event.getX() + "," + event.getY());
-        if(!shot1) {
+        if(!shot1&& sy2 < pyc - 500) {
             sy = MainActivity.y - 50;
             sx = MainActivity.x + 40;
             shot1 = true;
