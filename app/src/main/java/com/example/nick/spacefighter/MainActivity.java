@@ -69,15 +69,19 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap bwEnemy;
     private Bitmap enemy2;
     private Bitmap bwEnemy2;
+    private Bitmap enemy3;
+    private Bitmap bwEnemy3;
     private Bitmap player;
     private Bitmap bwPlayer;
     private Bitmap shot;
     private Bitmap bwShot;
     private Bitmap star;
     private Bitmap bwStar;
+    private Bitmap boom;
+    private Bitmap bwBoom;
     DrawingThread thread;
     Paint text;
-    int ex,ey,ex2,ey2,px,py,sx,sy,sx2,sy2;
+    int ex,ey,ex2,ey2,ex3,ey3,px,py,sx,sy,sx2,sy2;
     int score;
     boolean shot1 = false;
     boolean shot2 = false;
@@ -89,7 +93,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     int eyc;
     int exc2;
     int eyc2;
-
+    int exc3;
+    int eyc3;
 
 
     public CustomView(Context ctx, AttributeSet attrs) {
@@ -116,6 +121,14 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         bwEnemy2=enemy2.copy(Bitmap.Config.ARGB_8888, true);
         bwEnemy2 = resizeBitmap(bwEnemy2,100,100);
 
+        enemy3 = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy3);
+        bwEnemy3=enemy3.copy(Bitmap.Config.ARGB_8888, true);
+        bwEnemy3 = resizeBitmap(bwEnemy3,100,100);
+
+        boom = BitmapFactory.decodeResource(context.getResources(),R.drawable.boom);
+        bwBoom=boom.copy(Bitmap.Config.ARGB_8888, true);
+        bwBoom = resizeBitmap(bwBoom,100,100);
+
         SurfaceHolder holder = getHolder();
         holder.addCallback(this);
 
@@ -124,9 +137,11 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         text.setColor(Color.WHITE);
         text.setTextSize(48);
         ex= 0;
-        ey= (int) (Math.random() * 200);;
+        ey= -300;
         ex2= 0;
-        ey2= (int) (Math.random() * 200);
+        ey2= -300;
+        ex3= 0;
+        ey3= -300;
         px= 0;
         py= 0;
         sx= 0;
@@ -197,7 +212,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         eyc = ey + 50;
         exc2 = ex2 + 50;
         eyc2 = ey2 + 50;
-
+        exc3 = ex3 + 50;
+        eyc3 = ey3 + 50;
 
         canvas.drawColor(Color.BLACK);
 
@@ -208,9 +224,11 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
 
         canvas.drawBitmap(bwEnemy,ex,ey,null);
         canvas.drawBitmap(bwEnemy2,ex2,ey2,null);
+        canvas.drawBitmap(bwEnemy3,ex3,ey3,null);
         canvas.drawText("Score: " + score,canvas.getWidth() / 2 - 125,75,text);
         ey+=5;
         ey2+=7;
+        ey3+=3;
 
         if(MainActivity.x + 50 > canvas.getWidth()){
             MainActivity.x =canvas.getWidth()-50;
@@ -236,33 +254,70 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             ex =(int) (Math.random() * canvas.getWidth());
         }
         if(ey2 > canvas.getHeight()){
-            ey2 =-200;
+            ey2 =-300;
             ex2 =(int) (Math.random() * canvas.getWidth());
         }
         if(ex2 + 200 > canvas.getWidth()){
             ey2 =-200;
             ex2 =(int) (Math.random() * canvas.getWidth());
         }
+        if(ey3 > canvas.getHeight()){
+            ey3 =-200;
+            ex3 =(int) (Math.random() * canvas.getWidth());
+        }
+        if(ex3 + 200 > canvas.getWidth()){
+            ey3 =-200;
+            ex3 =(int) (Math.random() * canvas.getWidth());
+        }
         double Ecollision = Math.sqrt((exc2 - exc) * (exc2 - exc) + (eyc2 - eyc) * (eyc2 - eyc));
         if(Ecollision<75){
+            canvas.drawBitmap(bwBoom,ex,ey,null);
+            canvas.drawBitmap(bwBoom,ex2,ey2,null);
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
-            ey2 =-200;
+            ey2 =-300;
+            ex2 =(int) (Math.random() * canvas.getWidth());
+
+        }
+        double Ecollision2 = Math.sqrt((exc3 - exc) * (exc3 - exc) + (eyc3 - eyc) * (eyc3 - eyc));
+        if(Ecollision2<75){
+            canvas.drawBitmap(bwBoom,ex,ey,null);
+            canvas.drawBitmap(bwBoom,ex3,ey3,null);
+            ey =-200;
+            ex =(int) (Math.random() * canvas.getWidth());
+            ey3 =-200;
+            ex3 =(int) (Math.random() * canvas.getWidth());
+
+        }
+        double Ecollision3 = Math.sqrt((exc2 - exc3) * (exc2 - exc3) + (eyc2 - eyc3) * (eyc2 - eyc3));
+        if(Ecollision3<75){
+            canvas.drawBitmap(bwBoom,ex3,ey3,null);
+            canvas.drawBitmap(bwBoom,ex2,ey2,null);
+            ey3 =-200;
+            ex3 =(int) (Math.random() * canvas.getWidth());
+            ey2 =-300;
             ex2 =(int) (Math.random() * canvas.getWidth());
 
         }
         double collision = Math.sqrt((pxc - exc) * (pxc - exc) + (pyc - eyc) * (pyc - eyc));
         if(collision<75){
+            canvas.drawBitmap(bwBoom,ex,ey,null);
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
-            canvas.drawColor(Color.RED);
             score -= 5;
         }
         double collision2 = Math.sqrt((pxc - exc2) * (pxc - exc2) + (pyc - eyc2) * (pyc - eyc2));
         if(collision2<75){
-            ey2 =-200;
+            canvas.drawBitmap(bwBoom,ex2,ey2,null);
+            ey2 =-300;
             ex2 =(int) (Math.random() * canvas.getWidth());
-            canvas.drawColor(Color.RED);
+            score -= 5;
+        }
+        double collision3 = Math.sqrt((pxc - exc3) * (pxc - exc3) + (pyc - eyc3) * (pyc - eyc3));
+        if(collision3<75){
+            canvas.drawBitmap(bwBoom,ex3,ey3,null);
+            ey3 =-200;
+            ex3 =(int) (Math.random() * canvas.getWidth());
             score -= 5;
         }
 
@@ -275,6 +330,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
 
             double distance = Math.sqrt((sx - exc) * (sx - exc) + (sy - eyc) * (sy - eyc));
             if (distance < 50) {
+                canvas.drawBitmap(bwBoom,ex,ey,null);
                 ex = (int) (Math.random() * canvas.getWidth());
                 ey = - 100;
                 shot1 = false;
@@ -282,8 +338,17 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             }
             double distance2 = Math.sqrt((sx - exc2) * (sx - exc2) + (sy - eyc2) * (sy - eyc2));
             if (distance2 < 50) {
+                canvas.drawBitmap(bwBoom,ex2,ey2,null);
                 ex2 = (int) (Math.random() * canvas.getWidth());
-                ey2 = - 100;
+                ey2 = - 300;
+                shot1 = false;
+                score++;
+            }
+            double distance3 = Math.sqrt((sx - exc3) * (sx - exc3) + (sy - eyc3) * (sy - eyc3));
+            if (distance3 < 50) {
+                canvas.drawBitmap(bwBoom,ex3,ey3,null);
+                ex3 = (int) (Math.random() * canvas.getWidth());
+                ey3 = - 100;
                 shot1 = false;
                 score++;
             }
@@ -298,6 +363,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
 
             double distance = Math.sqrt((sx2 - exc) * (sx2 - exc) + (sy2 - eyc) * (sy2 - eyc));
             if (distance < 50) {
+                canvas.drawBitmap(bwBoom,ex,ey,null);
                 ex = (int) (Math.random() * canvas.getWidth());
                 ey = - 100;
                 shot2 = false;
@@ -305,8 +371,17 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             }
             double distance2 = Math.sqrt((sx2 - exc2) * (sx2 - exc2) + (sy2 - eyc2) * (sy2 - eyc2));
             if (distance2 < 50) {
+                canvas.drawBitmap(bwBoom,ex2,ey2,null);
                 ex2 = (int) (Math.random() * canvas.getWidth());
-                ey2 = - 100;
+                ey2 = - 300;
+                shot2 = false;
+                score++;
+            }
+            double distance3 = Math.sqrt((sx2 - exc3) * (sx2 - exc3) + (sy2 - eyc3) * (sy2 - eyc3));
+            if (distance < 50) {
+                canvas.drawBitmap(bwBoom,ex3,ey3,null);
+                ex3 = (int) (Math.random() * canvas.getWidth());
+                ey3 = - 100;
                 shot2 = false;
                 score++;
             }
