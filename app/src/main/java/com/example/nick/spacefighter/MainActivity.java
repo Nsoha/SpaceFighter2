@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+        senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_GAME);
 
 
     }
@@ -79,8 +79,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     int ex,ey,px,py,sx,sy;
     int score;
     boolean shot1 = false;
-    int stX[] = new int[50];
-    int stY[] = new int[50];
+    int stX[] = new int[30];
+    int stY[] = new int[30];
     int pyc;
     int pxc;
     int exc;
@@ -125,12 +125,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         score = 0;
 
 
-        for(int i = 0; i < stX.length; i++) {
-            stX[i] = (int) (Math.random());
-        }
-
         for (int j = 0; j < stY.length; j++) {
-            stY[j] = (int) (Math.random());
+            stY[j] = 2000;
 
         }
 
