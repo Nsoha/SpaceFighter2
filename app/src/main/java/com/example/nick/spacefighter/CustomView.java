@@ -131,6 +131,7 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     public void customDraw(Canvas canvas) {
        py = canvas.getHeight() - 200;
 
+           // px =- x;
 
         canvas.drawColor(Color.BLACK);
         canvas.drawBitmap(bwEnemy,ex,ey,null);

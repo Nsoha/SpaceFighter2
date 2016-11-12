@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Sensor mySensor = sensorEvent.sensor;
 
         if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            x = sensorEvent.values[0];
-            y = sensorEvent.values[1];
+            x -= (int) sensorEvent.values[0];
+            y += (int) sensorEvent.values[1];
         }
 
     }
