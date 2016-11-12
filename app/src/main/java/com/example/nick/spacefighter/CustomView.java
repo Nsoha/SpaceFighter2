@@ -9,6 +9,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,10 +21,12 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import static android.content.Context.SENSOR_SERVICE;
 import static com.example.nick.spacefighter.R.id.canvas;
 
 
-public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
+
+public class CustomView extends SurfaceView implements SurfaceHolder.Callback, SensorEventListener{
 
     protected Context context;
     private Bitmap enemy;
@@ -30,9 +37,15 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap bwShot;
     DrawingThread thread;
     Paint text;
-    int ex,ey,px,py,sx,sy;
+    float ex,ey,px,py,sx,sy;
     int score;
     boolean shot1 = false;
+
+
+
+
+
+
 
     public CustomView(Context ctx, AttributeSet attrs) {
         super(ctx,attrs);
@@ -64,6 +77,7 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
         sx= 0;
         sy= 0;
         score = 0;
+
 
 
     }
@@ -148,6 +162,26 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor mySensor = sensorEvent.sensor;
+
+        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            px =+ sensorEvent.values[0];
+            py =+ sensorEvent.values[1];
+
+
+        }
+
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+
 
 
     @Override
@@ -214,4 +248,5 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback {
 
 
     }
+
 }
