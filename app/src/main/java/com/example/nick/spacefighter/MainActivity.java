@@ -87,6 +87,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     int score;
     boolean shot1 = false;
     boolean shot2 = false;
+    boolean plyrdmg = false;
     int stX[] = new int[30];
     int stY[] = new int[30];
     int pyc;
@@ -220,7 +221,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         eyc2 = ey2 + 50;
         exc3 = ex3 + 50;
         eyc3 = ey3 + 50;
-
+        plyrdmg = false;
         canvas.drawColor(Color.BLACK);
 
         for(int i = 0; i< stX.length; i++ ) {
@@ -307,33 +308,30 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         }
         double collision = Math.sqrt((pxc - exc) * (pxc - exc) + (pyc - eyc) * (pyc - eyc));
         if(collision<75){
-            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             canvas.drawBitmap(bwBoom,ex,ey,null);
-            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
             score -= 5;
             canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
+            plyrdmg = true;
         }
         double collision2 = Math.sqrt((pxc - exc2) * (pxc - exc2) + (pyc - eyc2) * (pyc - eyc2));
         if(collision2<75){
-            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             canvas.drawBitmap(bwBoom,ex2,ey2,null);
-            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             ey2 =-300;
             ex2 =(int) (Math.random() * canvas.getWidth());
             score -= 5;
             canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
+            plyrdmg = true;
         }
         double collision3 = Math.sqrt((pxc - exc3) * (pxc - exc3) + (pyc - eyc3) * (pyc - eyc3));
         if(collision3<75){
-            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             canvas.drawBitmap(bwBoom,ex3,ey3,null);
-            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             ey3 =-200;
             ex3 =(int) (Math.random() * canvas.getWidth());
             score -= 5;
             canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
+            plyrdmg = true;
         }
 
         if(shot1) {
@@ -393,7 +391,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
                 score++;
             }
             double distance3 = Math.sqrt((sx2 - exc3) * (sx2 - exc3) + (sy2 - eyc3) * (sy2 - eyc3));
-            if (distance < 50) {
+            if (distance3 < 50) {
                 canvas.drawBitmap(bwBoom,ex3,ey3,null);
                 ex3 = (int) (Math.random() * canvas.getWidth());
                 ey3 = - 100;
@@ -411,6 +409,9 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
 
         sy2-=30;
         sy-=30;
+        if(plyrdmg){
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
+        }
     }
 
 
