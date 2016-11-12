@@ -255,6 +255,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         if(ey > canvas.getHeight()){
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
+            score -= 3;
         }
         if(ex + 100 > canvas.getWidth()){
             ey =-200;
@@ -263,6 +264,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         if(ey2 > canvas.getHeight()){
             ey2 =-300;
             ex2 =(int) (Math.random() * canvas.getWidth());
+            score -= 5;
         }
         if(ex2 + 100 > canvas.getWidth()){
             ey2 =-200;
@@ -271,6 +273,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         if(ey3 > canvas.getHeight()){
             ey3 =-200;
             ex3 =(int) (Math.random() * canvas.getWidth());
+            score -= 10;
         }
         if(ex3 + 100 > canvas.getWidth()){
             ey3 =-200;
