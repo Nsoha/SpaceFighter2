@@ -27,7 +27,7 @@ import static android.R.attr.y;
 import static android.content.Context.SENSOR_SERVICE;
 import static com.example.nick.spacefighter.R.id.canvas;
 
-
+/*
 
 public class CustomView extends SurfaceView implements SurfaceHolder.Callback{
 
@@ -131,7 +131,8 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     public void customDraw(Canvas canvas) {
        py = canvas.getHeight() - 200;
 
-           // px =- x;
+
+            px =- x;
 
         canvas.drawColor(Color.BLACK);
         canvas.drawBitmap(bwEnemy,ex,ey,null);
@@ -234,3 +235,4 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
 }
+*/
