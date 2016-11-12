@@ -11,7 +11,7 @@ import android.os.Bundle;
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
-
+    public float x,y;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +21,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
 
+
     }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor mySensor = sensorEvent.sensor;
+
+        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            x = sensorEvent.values[0];
+            y = sensorEvent.values[1];
+        }
 
     }
 

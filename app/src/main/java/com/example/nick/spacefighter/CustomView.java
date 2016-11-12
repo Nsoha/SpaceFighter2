@@ -1,6 +1,7 @@
 package com.example.nick.spacefighter;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -21,12 +22,15 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import static android.R.attr.x;
+import static android.R.attr.y;
 import static android.content.Context.SENSOR_SERVICE;
 import static com.example.nick.spacefighter.R.id.canvas;
 
 
 
-public class CustomView extends SurfaceView implements SurfaceHolder.Callback, SensorEventListener{
+public class CustomView extends SurfaceView implements SurfaceHolder.Callback{
+
 
     protected Context context;
     private Bitmap enemy;
@@ -40,11 +44,6 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback, S
     float ex,ey,px,py,sx,sy;
     int score;
     boolean shot1 = false;
-
-
-
-
-
 
 
     public CustomView(Context ctx, AttributeSet attrs) {
@@ -130,7 +129,9 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback, S
 
 
     public void customDraw(Canvas canvas) {
-        py = canvas.getHeight() - 200;
+       py = canvas.getHeight() - 200;
+
+
         canvas.drawColor(Color.BLACK);
         canvas.drawBitmap(bwEnemy,ex,ey,null);
         canvas.drawBitmap(bwPlayer,px,py,null);
@@ -162,24 +163,6 @@ public class CustomView extends SurfaceView implements SurfaceHolder.Callback, S
 
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        Sensor mySensor = sensorEvent.sensor;
-
-        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            px =+ sensorEvent.values[0];
-            py =+ sensorEvent.values[1];
-
-
-        }
-
-
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 
 
 
