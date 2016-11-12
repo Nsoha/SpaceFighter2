@@ -73,6 +73,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap bwEnemy3;
     private Bitmap player;
     private Bitmap bwPlayer;
+    private Bitmap playerdmg;
+    private Bitmap bwPlayerdmg;
     private Bitmap shot;
     private Bitmap bwShot;
     private Bitmap star;
@@ -108,6 +110,10 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         player = BitmapFactory.decodeResource(context.getResources(),R.drawable.player);
         bwPlayer=player.copy(Bitmap.Config.ARGB_8888, true);
         bwPlayer = resizeBitmap(bwPlayer,100,100);
+
+        playerdmg = BitmapFactory.decodeResource(context.getResources(),R.drawable.playerdmg);
+        bwPlayerdmg=playerdmg.copy(Bitmap.Config.ARGB_8888, true);
+        bwPlayerdmg = resizeBitmap(bwPlayerdmg,100,100);
 
         shot = BitmapFactory.decodeResource(context.getResources(),R.drawable.shot);
         bwShot=shot.copy(Bitmap.Config.ARGB_8888, true);
@@ -301,24 +307,33 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         }
         double collision = Math.sqrt((pxc - exc) * (pxc - exc) + (pyc - eyc) * (pyc - eyc));
         if(collision<75){
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             canvas.drawBitmap(bwBoom,ex,ey,null);
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
             score -= 5;
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
         }
         double collision2 = Math.sqrt((pxc - exc2) * (pxc - exc2) + (pyc - eyc2) * (pyc - eyc2));
         if(collision2<75){
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             canvas.drawBitmap(bwBoom,ex2,ey2,null);
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             ey2 =-300;
             ex2 =(int) (Math.random() * canvas.getWidth());
             score -= 5;
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
         }
         double collision3 = Math.sqrt((pxc - exc3) * (pxc - exc3) + (pyc - eyc3) * (pyc - eyc3));
         if(collision3<75){
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             canvas.drawBitmap(bwBoom,ex3,ey3,null);
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
             ey3 =-200;
             ex3 =(int) (Math.random() * canvas.getWidth());
             score -= 5;
+            canvas.drawBitmap(bwPlayerdmg,MainActivity.x,MainActivity.y,null);
         }
 
         if(shot1) {
