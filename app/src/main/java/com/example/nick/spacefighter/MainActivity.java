@@ -256,7 +256,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
         }
-        if(ex + 200 > canvas.getWidth()){
+        if(ex + 100 > canvas.getWidth()){
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
         }
@@ -264,7 +264,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             ey2 =-300;
             ex2 =(int) (Math.random() * canvas.getWidth());
         }
-        if(ex2 + 200 > canvas.getWidth()){
+        if(ex2 + 100 > canvas.getWidth()){
             ey2 =-200;
             ex2 =(int) (Math.random() * canvas.getWidth());
         }
@@ -272,7 +272,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             ey3 =-200;
             ex3 =(int) (Math.random() * canvas.getWidth());
         }
-        if(ex3 + 200 > canvas.getWidth()){
+        if(ex3 + 100 > canvas.getWidth()){
             ey3 =-200;
             ex3 =(int) (Math.random() * canvas.getWidth());
         }
@@ -347,7 +347,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
                 ex = (int) (Math.random() * canvas.getWidth());
                 ey = - 100;
                 shot1 = false;
-                score++;
+                score+=3;
             }
             double distance2 = Math.sqrt((sx - exc2) * (sx - exc2) + (sy - eyc2) * (sy - eyc2));
             if (distance2 < 50) {
@@ -355,7 +355,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
                 ex2 = (int) (Math.random() * canvas.getWidth());
                 ey2 = - 300;
                 shot1 = false;
-                score++;
+                score+=5;
             }
             double distance3 = Math.sqrt((sx - exc3) * (sx - exc3) + (sy - eyc3) * (sy - eyc3));
             if (distance3 < 50) {
@@ -363,7 +363,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
                 ex3 = (int) (Math.random() * canvas.getWidth());
                 ey3 = - 100;
                 shot1 = false;
-                score++;
+                score+=10;
             }
 
         }
@@ -380,7 +380,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
                 ex = (int) (Math.random() * canvas.getWidth());
                 ey = - 100;
                 shot2 = false;
-                score++;
+                score+=3;
             }
             double distance2 = Math.sqrt((sx2 - exc2) * (sx2 - exc2) + (sy2 - eyc2) * (sy2 - eyc2));
             if (distance2 < 50) {
@@ -388,7 +388,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
                 ex2 = (int) (Math.random() * canvas.getWidth());
                 ey2 = - 300;
                 shot2 = false;
-                score++;
+                score+=5;
             }
             double distance3 = Math.sqrt((sx2 - exc3) * (sx2 - exc3) + (sy2 - eyc3) * (sy2 - eyc3));
             if (distance3 < 50) {
@@ -396,7 +396,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
                 ex3 = (int) (Math.random() * canvas.getWidth());
                 ey3 = - 100;
                 shot2 = false;
-                score++;
+                score+=10;
             }
 
         }
@@ -426,11 +426,13 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             sy = MainActivity.y - 50;
             sx = MainActivity.x + 40;
             shot1 = true;
+            score--;
             return true;
         }
         else if(shot1 && !shot2 && sy < pyc - 500) {
             sy2 = MainActivity.y - 50;
             sx2 = MainActivity.x + 40;
+            score--;
             shot2 = true;
         }
 
