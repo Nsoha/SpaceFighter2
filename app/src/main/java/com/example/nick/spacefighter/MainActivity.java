@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Sensor mySensor = sensorEvent.sensor;
 
         if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            x = (int) Math.pow(sensorEvent.values[0], 3) + 250;
-            y = (int) Math.pow(sensorEvent.values[1], 3) + 400;
+            x -= (int) Math.pow(sensorEvent.values[0], 1);
+            y += (int) Math.pow(sensorEvent.values[1], 1);
 
         }
 
@@ -76,11 +76,16 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap bwStar;
     DrawingThread thread;
     Paint text;
-    float ex,ey,px,py,sx,sy;
+    int ex,ey,px,py,sx,sy;
     int score;
     boolean shot1 = false;
     int stX[] = new int[50];
     int stY[] = new int[50];
+    int pyc;
+    int pxc;
+    int exc;
+    int eyc;
+
 
 
 
@@ -179,8 +184,11 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
 
 
     public void customDraw(Canvas canvas) {
+    pyc = MainActivity.y + 50;
+        pxc = MainActivity.x + 50;
+        exc = ex + 50;
+        eyc = ey + 50;
 
-        py = canvas.getHeight() - 200;
 
 
         canvas.drawColor(Color.BLACK);
@@ -202,8 +210,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             MainActivity.x = -50;
         }
 
-        if(MainActivity.y > canvas.getHeight() - 50){
-            MainActivity.y = canvas.getHeight() - 50;
+        if(MainActivity.y > canvas.getHeight() - 100){
+            MainActivity.y = canvas.getHeight() - 100;
         }
         if(MainActivity.y < -10){
             MainActivity.y = -10;
@@ -218,8 +226,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
         }
-        double collision = Math.sqrt((MainActivity.x - ex + 50) * (MainActivity.x - ex + 50) + (MainActivity.y - ey + 50) * (MainActivity.y - ey + 50));
-        if(collision<100){
+        double collision = Math.sqrt((pxc - exc) * (pxc - exc) + (pyc - eyc) * (pyc - eyc));
+        if(collision<75){
             ey =-200;
             ex =(int) (Math.random() * canvas.getWidth());
             canvas.drawColor(Color.RED);
@@ -233,8 +241,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
                 shot1 = false;
             }
 
-            double distance = Math.sqrt((sx - ex) * (sx - ex) + (sy - ey) * (sy - ey));
-            if (distance < 100) {
+            double distance = Math.sqrt((sx - exc) * (sx - exc) + (sy - eyc) * (sy - eyc));
+            if (distance < 50) {
                 ex = (int) (Math.random() * canvas.getWidth());
                 ey = - 100;
                 shot1 = false;
