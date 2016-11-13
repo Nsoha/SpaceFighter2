@@ -425,14 +425,14 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     public boolean onTouchEvent(MotionEvent event ) {
 
         Log.v("touch event", event.getX() + "," + event.getY());
-        if(!shot1&& sy2 < pyc - 500) {
+        if(!shot1&& sy2 < pyc - 500 && sy < pyc - 500) {
             sy = MainActivity.y - 50;
             sx = MainActivity.x + 40;
             shot1 = true;
             score--;
             return true;
         }
-        else if(shot1 && !shot2 && sy < pyc - 500) {
+        else if(shot1 && !shot2 && sy < pyc - 500 && sy2 < pyc - 500) {
             sy2 = MainActivity.y - 50;
             sx2 = MainActivity.x + 40;
             score--;
