@@ -1383,7 +1383,10 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             msy = -150;
             lvl = 2;
             msh = 30;
-
+            eshot1 = false;
+            eshot2 = false;
+            eshot3 = false;
+            eshot4 = false;
         }
 
         esy1 +=20;
