@@ -103,7 +103,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     private Bitmap bwBoom;
     DrawingThread thread;
     Paint text;
-    int ex,ey,ex2,ey2,ex3,ey3,ex4,ey4,ex5,ey5,ex6,ey6,msx,msy,px,py,sx,sy,sx2,sy2, esx1,esy1,esx2,esy2,esx3,esy3,esx4,esy4;
+    int ex,ey,ex2,ey2,ex3,ey3,ex4,ey4,ex5,ey5,ex6,ey6,msx,msy,px,py,sx,sy,sx2,sy2,
+            esx1,esy1,esx2,esy2,esx3,esy3,esx4,esy4,esx1a,esy1a,esx2a,esy2a,esx3a,esy3a,esx4a,esy4a;
     int score;
     boolean shot1 = false;
     boolean shot2 = false;
@@ -111,6 +112,10 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     boolean eshot2 = false;
     boolean eshot3 = false;
     boolean eshot4 = false;
+    boolean eshot1a = false;
+    boolean eshot2a = false;
+    boolean eshot3a = false;
+    boolean eshot4a = false;
     boolean plyrdmg = false;
     int stX[] = new int[30];
     int stY[] = new int[30];
@@ -138,7 +143,8 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
     boolean e6 = true;
     boolean right = true;
     int msh = 25;
-
+    int lvl;
+    long t1;
     public CustomView(Context ctx, AttributeSet attrs) {
         super(ctx,attrs);
         context = ctx;
@@ -247,9 +253,10 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         esx4 = 0;
         esy4 = 0;
         score = 0;
+        lvl = 1;
 
         startTime = System.currentTimeMillis();
-
+        t1 = startTime;
         for (int j = 0; j < stY.length; j++) {
             stY[j] = 2000;
 
@@ -306,7 +313,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
 
     public void customDraw(Canvas canvas) {
         long timeNow = System.currentTimeMillis();
-        long timeToGo = 120 - (timeNow - startTime) / 1000;
+        long timeToGo = 60 - (timeNow - t1) / 1000;
         pyc = MainActivity.y + 50;
         pxc = MainActivity.x + 50;
         exc = ex + 50;
@@ -736,7 +743,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
 
 
 
-       else if(timeToGo < 5 && (e1 || e2 || e3 || e4 || e5 ||e6)) {
+       else if(timeToGo < 5 && (e1 || e2 || e3 || e4 || e5 || e6)) {
 
             if(e1) {
                 canvas.drawBitmap(bwEnemy, ex, ey, null);
@@ -1201,7 +1208,7 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             }
 
         }
-        else if(timeToGo < 5 && (!e1 && !e2 && !e3 && !e4 && !e5 && !e6)) {
+        else if(timeToGo < 5 && lvl == 1 && (!e1 && !e2 && !e3 && !e4 && !e5 && !e6)) {
         if (msy < 75) {
             msy += 5;
         }
@@ -1346,10 +1353,6 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             if (distance < 75) {
                 shot1 = false;
                 msh--;
-                if(msh == 0){
-                    canvas.drawBitmap(bwBoom, msx + 50, msy, null);
-                    score += 100;
-                }
             }
 
         }
@@ -1364,11 +1367,22 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
             if (distance < 75) {
                 shot2 = false;
                 msh--;
-                if(msh == 0){
-                    canvas.drawBitmap(bwBoom, msx + 50, msy, null);
-                    score += 100;
-                }
             }
+
+        }
+        if(msh == 0) {
+            canvas.drawBitmap(bwBoom, msx + 50, msy, null);
+            score += 100;
+            t1 = System.currentTimeMillis();
+            e1 = true;
+            e2 = true;
+            e3 = true;
+            e4 = true;
+            e5 = true;
+            e6 = true;
+            msy = -150;
+            lvl = 2;
+            msh = 30;
 
         }
 
@@ -1378,7 +1392,252 @@ class CustomView extends SurfaceView implements SurfaceHolder.Callback{
         esy4 +=20;
     }
 
+    else if(timeToGo < 5 && lvl == 2 && (!e1 && !e2 && !e3 && !e4 && !e5 && !e6)) {
+        if (msy < 75) {
+            msy += 5;
+        }
+        if (right) {
+            msx += 5;
+        }
+        if (!right) {
+            msx -= 5;
+        }
+        if (msx > canvas.getWidth() - 200) {
+            right = false;
+        }
+        if (msx < 0) {
+            right = true;
+        }
 
+        if (MainActivity.x + 50 > canvas.getWidth()) {
+            MainActivity.x = canvas.getWidth() - 50;
+        }
+        if (MainActivity.x < -50) {
+            MainActivity.x = -50;
+        }
+
+        if (MainActivity.y > canvas.getHeight() - 100) {
+            MainActivity.y = canvas.getHeight() - 100;
+        }
+        if (MainActivity.y < -10) {
+            MainActivity.y = -10;
+        }
+        if (MainActivity.y < msyc + 50 ) {
+            MainActivity.y = msyc + 60;
+            plyrdmg = true;
+            score -= 20;
+        }
+
+
+        canvas.drawBitmap(bwPlayer, MainActivity.x, MainActivity.y, null);
+
+        if(msh >= 20) {
+            canvas.drawBitmap(bwMothership, msx, msy, null);
+        }
+        else if(msh >= 15 && msh < 20) {
+            canvas.drawBitmap(bwMothership2, msx, msy, null);
+        }
+        else if(msh >= 10 && msh < 15) {
+            canvas.drawBitmap(bwMothership3, msx, msy, null);
+        }
+        else if(msh >= 5 && msh < 10) {
+            canvas.drawBitmap(bwMothership4, msx, msy, null);
+        }
+        else if(msh > 0 && msh < 5) {
+            canvas.drawBitmap(bwMothership5, msx, msy, null);
+        }
+        if(msh > 0) {
+            if (!eshot1 && esy2 > msyc + 300 && esy3 > msyc + 300 && esy4 > msyc + 300) {
+                eshot1 = true;
+                esx1 = msxc - 60;
+                esy1 = msyc + 50;
+            }
+            if (eshot1 && !eshot2 && esy1 > msyc + 300 && esy3 > msyc + 300 && esy4 > msyc + 300) {
+                eshot2 = true;
+                esx2 = msxc - 60;
+                esy2 = msyc + 50;
+            }
+            if (eshot1 && eshot2 && !eshot3 && esy1 > msyc + 300 && esy2 > msyc + 300 && esy4 > msyc + 300) {
+                eshot3 = true;
+                esx3 = msxc - 60;
+                esy3 = msyc + 50;
+            }
+            if (eshot1 && eshot2 && eshot3 && !eshot4 && esy1 > msyc + 300 && esy2 > msyc + 300 && esy3 > msyc + 300) {
+                eshot4 = true;
+                esx4 = msxc - 60;
+                esy4 = msyc + 50;
+            }
+            if (!eshot1a && esy2a > msyc + 300 && esy3a > msyc + 300 && esy4a > msyc + 300) {
+                eshot1a = true;
+                esx1a = msxc + 50;
+                esy1a = msyc + 50;
+            }
+            if (eshot1a && !eshot2a && esy1a > msyc + 300 && esy3a > msyc + 300 && esy4a > msyc + 300) {
+                eshot2a = true;
+                esx2a = msxc + 50;
+                esy2a = msyc + 50;
+            }
+            if (eshot1a && eshot2a && !eshot3a && esy1a > msyc + 300 && esy2a > msyc + 300 && esy4a > msyc + 300) {
+                eshot3a = true;
+                esx3a = msxc + 50;
+                esy3a = msyc + 50;
+            }
+            if (eshot1a && eshot2a && eshot3a && !eshot4a && esy1a > msyc + 300 && esy2a > msyc + 300 && esy3a > msyc + 300) {
+                eshot4a = true;
+                esx4a = msxc + 50;
+                esy4a = msyc + 50;
+            }
+
+        }
+
+        if(eshot1){
+            canvas.drawBitmap(bwEshot, esx1, esy1, null);
+            if (esy1 > canvas.getHeight()) {
+                eshot1 = false;
+            }
+            double distance = Math.sqrt((esx1 - pxc) * (esx1 - pxc) + (esy1 - pyc) * (esy1 - pyc));
+            if (distance < 50) {
+                eshot1 = false;
+                score -= 20;
+                plyrdmg = true;
+            }
+        }
+        if(eshot2){
+            canvas.drawBitmap(bwEshot, esx2, esy2, null);
+            if (esy2 > canvas.getHeight()) {
+                eshot2 = false;
+            }
+            double distance = Math.sqrt((esx2 - pxc) * (esx2 - pxc) + (esy2 - pyc) * (esy2 - pyc));
+            if (distance < 50) {
+                eshot2 = false;
+                score -= 20;
+                plyrdmg = true;
+            }
+        }
+
+        if(eshot3){
+            canvas.drawBitmap(bwEshot, esx3, esy3, null);
+            if (esy3 > canvas.getHeight()) {
+                eshot3 = false;
+            }
+            double distance = Math.sqrt((esx3 - pxc) * (esx3 - pxc) + (esy3 - pyc) * (esy3 - pyc));
+            if (distance < 50) {
+                eshot3 = false;
+                score -= 20;
+                plyrdmg = true;
+            }
+        }
+        if(eshot4){
+            canvas.drawBitmap(bwEshot, esx4, esy4, null);
+            if (esy4 > canvas.getHeight()) {
+                eshot4 = false;
+            }
+            double distance = Math.sqrt((esx4 - pxc) * (esx4 - pxc) + (esy4 - pyc) * (esy4 - pyc));
+            if (distance < 50) {
+                eshot4 = false;
+                score -= 20;
+                plyrdmg = true;
+            }
+        }
+
+        if(eshot1a){
+            canvas.drawBitmap(bwEshot, esx1a, esy1a, null);
+            if (esy1a > canvas.getHeight()) {
+                eshot1a = false;
+            }
+            double distance = Math.sqrt((esx1a - pxc) * (esx1a - pxc) + (esy1a - pyc) * (esy1a - pyc));
+            if (distance < 50) {
+                eshot1a = false;
+                score -= 20;
+                plyrdmg = true;
+            }
+        }
+        if(eshot2a){
+            canvas.drawBitmap(bwEshot, esx2a, esy2a, null);
+            if (esy2a > canvas.getHeight()) {
+                eshot2a = false;
+            }
+            double distance = Math.sqrt((esx2a - pxc) * (esx2a - pxc) + (esy2a - pyc) * (esy2a - pyc));
+            if (distance < 50) {
+                eshot2a = false;
+                score -= 20;
+                plyrdmg = true;
+            }
+        }
+
+        if(eshot3a){
+            canvas.drawBitmap(bwEshot, esx3a, esy3a, null);
+            if (esy3a > canvas.getHeight()) {
+                eshot3a = false;
+            }
+            double distance = Math.sqrt((esx3a - pxc) * (esx3a - pxc) + (esy3a - pyc) * (esy3a - pyc));
+            if (distance < 50) {
+                eshot3a = false;
+                score -= 20;
+                plyrdmg = true;
+            }
+        }
+        if(eshot4a){
+            canvas.drawBitmap(bwEshot, esx4a, esy4a, null);
+            if (esy4a > canvas.getHeight()) {
+                eshot4a = false;
+            }
+            double distance = Math.sqrt((esx4a - pxc) * (esx4a - pxc) + (esy4a - pyc) * (esy4a - pyc));
+            if (distance < 50) {
+                eshot4a = false;
+                score -= 20;
+                plyrdmg = true;
+            }
+        }
+
+        canvas.drawText("Score: " + score, 0, 50, text);
+        if (timeToGo >= 0) {
+            canvas.drawText("Mothership: " + timeToGo, canvas.getWidth() / 2, 50, text);
+        }
+
+        if (shot1) {
+            canvas.drawBitmap(bwShot, sx, sy, null);
+
+            if (sy < 0) {
+                shot1 = false;
+            }
+            double distance = Math.sqrt((sx - msxc) * (sx - msxc) + (sy - msyc) * (sy - msyc));
+            if (distance < 75) {
+                shot1 = false;
+                msh--;
+            }
+
+        }
+
+        if (shot2) {
+            canvas.drawBitmap(bwShot, sx2, sy2, null);
+
+            if (sy2 < 0) {
+                shot2 = false;
+            }
+            double distance = Math.sqrt((sx2 - msxc) * (sx2 - msxc) + (sy2 - msyc) * (sy2 - msyc));
+            if (distance < 75) {
+                shot2 = false;
+                msh--;
+            }
+
+        }
+
+        if(msh == 0){
+            canvas.drawBitmap(bwBoom, msx + 50, msy, null);
+            score += 200;
+            msh = -1;
+        }
+
+        esy1 +=20;
+        esy2 +=20;
+        esy3 +=20;
+        esy4 +=20;
+        esy1a +=20;
+        esy2a +=20;
+        esy3a +=20;
+        esy4a +=20;
+    }
 
         for(int i = 0; i< stX.length; i++ ) {
         if (stY[i] > canvas.getHeight()) {
